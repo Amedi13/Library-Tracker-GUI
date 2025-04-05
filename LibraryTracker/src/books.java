@@ -1,4 +1,4 @@
-public class book {
+public class books {
 
     //book attributes
     private String author;
@@ -6,7 +6,7 @@ public class book {
     private String status;
 
     // constructor
-    public book(String author, String title, String status) {
+    public books(String author, String title, String status) {
         this.author = author; 
         this.title = title; 
         this.status = status; 
