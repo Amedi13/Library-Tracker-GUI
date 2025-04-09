@@ -77,7 +77,24 @@ public class Main extends JFrame implements ActionListener {
 
         switch(command){
             case "ADD":
-               
+            addMenu addBookMenu = new addMenu(); 
+            addBookMenu.setVisible(true);
+            break; 
+
+            case "DISPLAY": 
+            displayMenu display = new displayMenu(); 
+            display.setVisible(true); 
+            break;
+
+            case "FIND": 
+            findMenu findBook = new findMenu(); 
+            findBook.setVisible(true); 
+            break;
+
+            case "REMOVE": 
+            removeMenu removeBook = new removeMenu();
+            removeBook.setVisible(true); 
+            break; 
 
         }
     }
