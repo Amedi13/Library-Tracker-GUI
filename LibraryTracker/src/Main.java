@@ -1,6 +1,4 @@
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -57,6 +55,7 @@ public class Main extends JFrame implements ActionListener {
     add(find); 
     add(remove); 
 
+    setSize(800, 800);
     setLayout(new FlowLayout()); 
     setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -82,7 +81,7 @@ public class Main extends JFrame implements ActionListener {
             break; 
 
             case "DISPLAY": 
-            displayMenu display = new displayMenu(); 
+            displayMenu display = new displayMenu(list); 
             display.setVisible(true); 
             break;
 
@@ -109,11 +108,12 @@ public class Main extends JFrame implements ActionListener {
 
     // create a new jframe
     Main frame = new Main(); 
-    frame.setSize(400, 300);
     frame.setVisible(true );
     
         
     }    
+
+    
 
 }
 
