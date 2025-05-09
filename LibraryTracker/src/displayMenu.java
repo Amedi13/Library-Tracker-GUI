@@ -1,58 +1,63 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.print.Book;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-
 
 public class displayMenu extends JFrame implements ActionListener {
 
-   // private JButton display; 
     private ArrayList<books> books;
 
-    // frame constructor 
     public displayMenu(ArrayList<books> books) {
-        this.books = books; 
-        
-        setTitle("Display Books");
-        setLayout(new FlowLayout());
-        setSize(500,500);
+        this.books = books;
+
+        setTitle("📖 Book List");
+        setSize(500, 500);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
 
+        // Main panel with vertical box layout
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setBackground(new Color(252, 238, 238));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-       if(BookManager.bookList.isEmpty()){
-        add(new JLabel("No books to display"));
-       } else {
-        for (books book : BookManager.bookList) {
-            JLabel bookLabel = new JLabel("Title: " + book.getTitle() + ", Author: " + book.getAuthor() + ", Status: " + book.getStatus());
-            add(bookLabel);
+        Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
+
+        if (BookManager.bookList.isEmpty()) {
+            JLabel emptyLabel = new JLabel("No books to display.");
+            emptyLabel.setFont(labelFont);
+            emptyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            contentPanel.add(emptyLabel);
+        } else {
+            for (books book : BookManager.bookList) {
+                JLabel bookLabel = new JLabel(
+                    "📚 Title: " + book.getTitle() + 
+                    " | ✍️ Author: " + book.getAuthor() + 
+                    " | 📌 Status: " + book.getStatus()
+                );
+                bookLabel.setFont(labelFont);
+                bookLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                bookLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+                contentPanel.add(bookLabel);
+            }
         }
-       }
 
+        // Make scrollable if too many books
+        JScrollPane scrollPane = new JScrollPane(contentPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBorder(null);
+
+        add(scrollPane);
     }
-
-    
 
     @Override
     public void actionPerformed(ActionEvent e) {
-       
+        // No action needed
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setVisible(true); 
-       
+        SwingUtilities.invokeLater(() -> {
+            new displayMenu(new ArrayList<>()).setVisible(true);
+        });
     }
-    
 }

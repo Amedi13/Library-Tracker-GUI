@@ -1,119 +1,78 @@
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 
- 
-
-/**
- * Main Class
- * */
 public class Main extends JFrame implements ActionListener {
 
+    // Buttons
+    private JButton add, display, find, remove;
 
-   // buttons 
-   private JButton add; 
-   private JButton display; 
-   private JButton find; 
-   private JButton remove; 
+    public Main() {
+        setTitle("📚 Welcome to Your Library 📚");
+        setSize(400, 400);
+        setResizable(false);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Center the window
+        setLayout(new BorderLayout());
 
-   /**
-    * Main frame
-    */
-   public Main(){
-    
-    setTitle("Welcome to your Library"); 
+        // Panel for buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(4, 1, 15, 15)); // 4 rows, 1 column, spacing
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        buttonPanel.setBackground(new Color(245, 245, 245));
 
-    add = new JButton("Add new Book"); 
-    add.addActionListener(this);
-    add.setActionCommand("ADD");
+        Font buttonFont = new Font("SansSerif", Font.BOLD, 16);
 
-    display = new JButton("Display Books");
-    display.addActionListener(this);
-    display.setActionCommand("DISPLAY");
+        add = createStyledButton("Add New Book", "ADD", buttonFont);
+        display = createStyledButton("Display Books", "DISPLAY", buttonFont);
+        find = createStyledButton("Find a Book", "FIND", buttonFont);
+        remove = createStyledButton("Remove a Book", "REMOVE", buttonFont);
 
-    find = new JButton("Find a book");
-    find.addActionListener(this);
-    find.setActionCommand("FIND");
+        buttonPanel.add(add);
+        buttonPanel.add(display);
+        buttonPanel.add(find);
+        buttonPanel.add(remove);
 
-    remove = new JButton("Remove a Book"); 
-    remove.addActionListener(this);
-    remove.setActionCommand("REMOVE");
+        add(buttonPanel, BorderLayout.CENTER);
+    }
 
-    //add buttons to the frame
-    add(add); 
-    add(display);
-    add(find); 
-    add(remove); 
+    private JButton createStyledButton(String text, String command, Font font) {
+        JButton button = new JButton(text);
+        button.setFont(font);
+        button.setBackground(new Color(103, 138, 194));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setActionCommand(command);
+        button.addActionListener(this);
+        return button;
+    }
 
-    setSize(800, 800);
-    setLayout(new FlowLayout()); 
-    setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-
-   }
-
-    /**
-     * Action performed method
-     * @param e event 
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        // create a empty Array of objects
         ArrayList<books> list = new ArrayList<>();
-
         String command = e.getActionCommand();
 
-        switch(command){
+        switch (command) {
             case "ADD":
-            addMenu addBookMenu = new addMenu(); 
-            addBookMenu.setVisible(true);
-            break; 
-
-            case "DISPLAY": 
-            displayMenu display = new displayMenu(list); 
-            display.setVisible(true); 
-            break;
-
-            case "FIND": 
-            findMenu findBook = new findMenu(); 
-            findBook.setVisible(true); 
-            break;
-
-            case "REMOVE": 
-            removeMenu removeBook = new removeMenu();
-            removeBook.setVisible(true); 
-            break; 
-
+                new addMenu().setVisible(true);
+                break;
+            case "DISPLAY":
+                new displayMenu(list).setVisible(true);
+                break;
+            case "FIND":
+                new findMenu().setVisible(true);
+                break;
+            case "REMOVE":
+                new removeMenu().setVisible(true);
+                break;
         }
     }
 
-    /**
-     * Main Method
-     * @param args
-     */
     public static void main(String[] args) {
-
-        
-
-    // create a new jframe
-    Main frame = new Main(); 
-    frame.setVisible(true );
-    
-        
-    }    
-
-    
-
+        SwingUtilities.invokeLater(() -> {
+            Main frame = new Main();
+            frame.setVisible(true);
+        });
+    }
 }
-
